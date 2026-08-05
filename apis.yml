@@ -1,0 +1,151 @@
+aid: orum-com
+name: Orum
+description: >-
+  Orum is an AI-powered sales calling and performance platform, marketed as "The Calling
+  Performance System for Sales Teams" and "the AI-powered Live Conversation Platform to
+  supercharge sales activity, connect teams, and drive more revenue." Its products are a
+  parallel Dialer (up to 5 lines on the Launch plan, 10 on Ascend), Salesfloor for virtual
+  co-selling, a Coaching and Enablement suite, Orum AI trained on a claimed one billion-plus
+  sales calls, and Scout, a set of AI data agents. It positions itself as purpose-built for
+  maximizing live conversations and explicitly distinct from the dialers built into CRMs and
+  sales-engagement platforms, integrating instead with Salesforce, HubSpot, Outreach, Salesloft,
+  Gong Engage and Apollo. Pricing is two named plans, Launch and Ascend, both contact-sales with
+  a three-seat minimum and no published figures, plus a free trial capped at 500 dials; AI
+  Coaching and Webhooks are paid add-ons. As of this profiling pass Orum publishes NO public
+  developer surface — no OpenAPI, no API reference, no docs host, no SDKs, no MCP server and no
+  llms.txt (see x-evidence). Webhooks are sold as an add-on but are not publicly documented. It
+  does publish a status page, a trust portal, a responsible-disclosure policy, and SOC 2 Type 2
+  plus ISO 27001:2022, 27017:2015, 27018:2019 and 27701:2019 attestations.
+url: https://raw.githubusercontent.com/api-evangelist/orum-com/refs/heads/main/apis.yml
+x-type: company
+x-source: conversation:graph8
+x-tier: stub
+x-tier-reason: conversation-lead
+x-disambiguation: >-
+  Slugged `orum-com` for orum.com, the AI sales dialer. NOT to be confused with `all/orum`,
+  which is orum.io — an unrelated payments-infrastructure company (FedNow/RTP/ACH money
+  movement and bank-account verification). Two different companies, near-identical names, same
+  product-adjacent buyer. `all/orum` keeps its bare slug because it is already referenced by
+  four published paper bundles and ~25k generated pages; per the domain-slug convention the TLD
+  is appended only where needed to disambiguate, which is here.
+accessModel:
+  pricing: unknown
+  onboarding: sales-led
+  trial: true
+  try_now: false
+  public: false
+  label: Contact sales, 3-seat minimum, 500-dial free trial
+  confidence: high
+  source:
+  - https://www.orum.com/pricing
+  generated: '2026-08-04'
+  method: searched
+specificationVersion: '0.20'
+created: '2026-08-04'
+modified: '2026-08-04'
+image: https://cdn.sanity.io/images/w0eqmudi/production/2b821b473a58f9c3510eb28647c02e861d32727c-2000x1050.heif
+tags:
+- Company
+- AI
+- Sales
+- Sales Engagement
+- Sales Dialer
+- Outbound Sales
+- Sales Coaching
+- Conversation Intelligence
+- Telephony
+- Revenue Operations
+apis: []
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+- FN: APIs.json
+  email: info@apis.io
+common:
+- type: Website
+  url: https://www.orum.com/
+- type: Pricing
+  url: https://www.orum.com/pricing
+- type: Support
+  url: https://support.orum.com/en-US/orum
+- type: Blog
+  url: https://www.orum.com/blog
+- type: StatusPage
+  url: https://status.orum.com
+- type: TrustCenter
+  url: https://trust.orum.com
+- type: Compliance
+  url: https://www.orum.com/platform/security
+- type: Security
+  url: https://www.orum.com/responsible_disclosure
+- type: TermsOfService
+  url: https://www.orum.com/terms
+- type: PrivacyPolicy
+  url: https://www.orum.com/privacy
+- type: DataProcessingAddendum
+  url: https://www.orum.com/data_processing_addendum
+- type: TechnicalAndOrganizationalMeasures
+  url: https://www.orum.com/platform/security/technical-and-organizational-measures
+- type: Integrations
+  url: https://www.orum.com/platform/integrations
+- type: Partners
+  url: https://www.orum.com/partners
+- type: CaseStudies
+  url: https://www.orum.com/customer-stories
+- type: Reports
+  url: https://www.orum.com/reports-and-guides
+- type: Podcast
+  url: https://www.orum.com/podcasts
+- type: Demo
+  url: https://www.orum.com/request-demo
+- type: About
+  url: https://www.orum.com/about
+- type: Careers
+  url: https://www.orum.com/careers
+x-evidence:
+  harvested: '2026-08-04'
+  request: >-
+    Surfaced by the graph8 / Thomas Cornelius call 2026-08-04, where Orum was named as a
+    power-dialer competitor. Catalog held only orum.io under the `orum` slug, so the dialer
+    was entirely absent.
+  probes:
+  - https://www.orum.com/ -> HTTP 200 (orum.com redirects to www)
+  - https://orum.com/llms.txt -> HTTP 404
+  - https://orum.com/openapi.json -> HTTP 404
+  - https://orum.com/.well-known/api-catalog -> HTTP 404
+  - https://orum.com/mcp -> HTTP 404
+  - https://orum.com/developers -> HTTP 404
+  - https://orum.com/api -> HTTP 404
+  - https://docs.orum.com -> DNS does not resolve (curl 000)
+  - https://developers.orum.com -> DNS does not resolve (curl 000)
+  - https://api.orum.com/openapi.json -> DNS does not resolve (curl 000)
+  - https://app.orum.com -> DNS does not resolve (curl 000)
+  - https://status.orum.com -> HTTP 200, components Dialer / Salesfloor / Analytics / Coaching
+    suite, third-party Vonage Voice API + HubSpot API
+  - https://trust.orum.com -> HTTP 200
+  - https://support.orum.com/en-US/orum -> HTTP 200, help center only, no API articles found
+  - https://www.orum.com/pricing -> HTTP 200, Launch + Ascend, contact-sales, 3-seat minimum
+  - https://www.orum.com/platform/security -> HTTP 200, SOC 2 Type 2 + ISO 27001/27017/27018/27701
+  - https://www.orum.com/{blog,about,careers,terms,privacy,responsible_disclosure} -> HTTP 200
+  - https://www.orum.com/{data_processing_addendum,partners,customer-stories} -> HTTP 200
+  - https://www.orum.com/{podcasts,reports-and-guides,platform/integrations} -> HTTP 200
+  - https://github.com/orumcom -> HTTP 404 (no GitHub org found)
+  - https://www.orum.com/software_and_services_agreement -> HTTP 404 (linked in footer, dead)
+  - https://www.orum.com/oauth -> HTTP 404 (linked in nav as "Sign in", dead to a plain GET)
+  findings:
+    no_public_api: >-
+      Zero public developer surface. No OpenAPI at any conventional path, no docs or developers
+      host in DNS, no SDKs, no CLI, no MCP server, no llms.txt, no .well-known/api-catalog.
+      `apis: []` is deliberate and correct — nothing was scaffolded or generated for this
+      provider. Agent readiness will score 0.0 and that is the honest measurement.
+    webhooks_undocumented: >-
+      Webhooks are sold as a paid add-on on both plans and named as an integration method on the
+      homepage, but no webhook payload, event list or endpoint documentation is publicly
+      fetchable. This is the single cheapest thing Orum could publish.
+    two_broken_footer_links: >-
+      /software_and_services_agreement (footer, legal) and /oauth (nav, "Sign in") both 404 to a
+      plain GET. Worth telling them if the relationship ever warrants it.
+    competitive_claim_corrected: >-
+      The graph8 call characterized Orum as "about $250 per seat, a year contract and a minimum
+      of 10 seats." Orum's published pricing page shows no dollar figure, a 3-seat minimum, and
+      a 500-dial free trial. Thomas's competitive framing does not match what Orum publishes.
