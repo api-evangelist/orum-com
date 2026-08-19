@@ -1,0 +1,57 @@
+generated: '2026-08-13'
+method: searched
+source: https://support.orum.com/en-US/orum/article/ART-463-webhooks
+summary: >-
+  Orum publishes no developer sandbox, no test environment, no test credentials and no test/live
+  key separation — there are no keys. The one testing affordance Orum documents is the TEST
+  WEBHOOK button in webhook settings and the `"test": true` flag it puts on the resulting
+  delivery. Recorded because it is real and published; no test values were invented.
+test_live_separation:
+  key_prefixes: none — Orum issues no API keys
+  modes: none
+  note: there is no test tenant, test org, or sandbox account offering
+fixtures:
+- name: TEST WEBHOOK
+  kind: trigger
+  location: Settings -> System -> Webhooks, during webhook creation (before saving)
+  behaviour: >-
+    Sends a single test request to the configured Webhook URL so the integrator can confirm
+    the endpoint receives and parses the payload before going live.
+  distinguishing_marker:
+    field: test
+    value: true
+    note: >-
+      Present ONLY on test deliveries; absent on real ones. Orum instructs consumers to check
+      it "before processing the data to avoid consuming test data". The consequence is that the
+      test and live envelopes are not the same shape, so a receiver written against the test
+      payload must tolerate the field's absence.
+  verification: >-
+    Orum tells the integrator to read their own endpoint logs to confirm the received payload
+    structure — i.e. the ONLY way to learn the real payload shape is to receive one, because no
+    example payload and no schema is published.
+test_clocks:
+  supported: false
+time_simulation:
+  supported: false
+magic_values: []
+magic_values_note: >-
+  No test phone numbers, no simulated call outcomes, no decline/failure simulation values are
+  published. A parallel dialer is the kind of product where magic test numbers would matter
+  most, and none exist publicly.
+observability:
+  webhook_logs:
+    location: Settings -> System -> Webhooks -> VIEW WEBHOOK LOGS
+    filters: [Event Type, Date Range]
+    columns: [ID, URL, Status, Inserted At]
+    note: >-
+      The nearest thing Orum has to a developer console. UI-only; there is no log API and no
+      export.
+gaps:
+- No sandbox environment or trial API access of any kind.
+- No published example payload, so the test delivery is the only way to discover field names.
+- No way to replay or re-send a past event for debugging (no historical records at all).
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://support.orum.com/en-US/orum/article/ART-463-webhooks
+    status: 200

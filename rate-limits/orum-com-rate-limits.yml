@@ -1,0 +1,37 @@
+generated: '2026-08-13'
+method: searched
+source: https://support.orum.com/en-US/orum/article/ART-463-webhooks
+docs: null
+limit_count: 0
+note: >-
+  Orum publishes NO API rate limits, because Orum publishes no request API. No X-RateLimit-*,
+  RateLimit-* or Retry-After headers are documented, and there is no 429 contract, because
+  there is no endpoint a consumer can call. This is an honest zero, not an unchecked field.
+headers: []
+status_on_exhaustion: null
+limits: []
+delivery_limits:
+  note: >-
+    The only published runtime numbers govern OUTBOUND webhook delivery — they constrain Orum's
+    calls to the consumer, not the other way round. Recorded here so an integrator sizing a
+    receiver has them, but they are explicitly NOT API rate limits.
+  scope: per webhook subscription
+  max_delivery_attempts: 8
+  retry_window_minutes: 30
+  backoff: exponential with jitter
+  consumer_ack_timeout_seconds: 15
+  retried_on: [3xx, 4xx, 5xx, timeout]
+product_limits:
+  note: product usage caps published on the pricing page, not API limits
+  free_trial_dials: 500
+  paid_plan_dials: unlimited (Orum FAQ, "Orum does not limit any dials on any paid plans")
+  parallel_lines: {Launch: 5, Ascend: 10}
+  caller_ids: {Launch: 5 per month, Ascend: 10 per user per month}
+  data_enrichment_credits: {Ascend: 200 per month}
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://support.orum.com/en-US/orum/article/ART-463-webhooks
+    status: 200
+  - url: https://www.orum.com/pricing
+    status: 200

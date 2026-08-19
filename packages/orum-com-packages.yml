@@ -1,0 +1,116 @@
+generated: '2026-08-13'
+method: searched
+source: https://chromewebstore.google.com/detail/orum/mgldaplfkpdgnojhbmllomokgeabokdd
+summary: >-
+  Orum ships NO client SDK in any language. npm, PyPI, RubyGems, crates.io, Packagist, NuGet,
+  Maven Central and pkg.go.dev were all checked and hold no first-party Orum client library —
+  consistent with there being no API to wrap. The one first-party distributed artifact Orum
+  publishes is a browser extension. It is catalogued here as a package because it is a real,
+  versioned, dated distribution, but it is NOT an SDK and no `SDKs` pointer is emitted for it.
+sdk_count: 0
+package_count: 1
+packages:
+- language: javascript
+  registry: chrome-web-store
+  name: Orum
+  id: mgldaplfkpdgnojhbmllomokgeabokdd
+  kind: browser-extension
+  url: https://chromewebstore.google.com/detail/orum/mgldaplfkpdgnojhbmllomokgeabokdd
+  install: install from the Chrome Web Store, or from within Orum at Settings -> System -> Add Chrome Extension
+  official: true
+  official_evidence: >-
+    Listing publisher is "Orum", developer email publisher@orum.com, and the declared host
+    permissions are *://orum.com/* and *://*.orum.com/*.
+  version: 0.1.1
+  published: '2026-02-25'
+  users: 6000
+  rating: 5.0 (4 ratings)
+  size: 618KiB
+  browsers: [Chrome, Microsoft Edge]
+  purpose: >-
+    Embeds the prospect's LinkedIn profile into the Orum connect screen (requires the rep to be
+    signed in to LinkedIn and the prospect's LinkedIn URL to be populated).
+  docs: https://support.orum.com/en-US/orum/article/apiCNAs9-chrome-extension
+  currency_note: >-
+    Version 0.1.1 after ~7 years of company operation, last updated 2026-02-25 — an actively
+    maintained but deliberately minimal artifact.
+
+registries_checked:
+- registry: npm
+  result: none
+  note: >-
+    A search for "orum" returns @orum-io/openapi-mcp-server, which belongs to orum.io (the
+    payments-infrastructure company) and NOT to orum.com. Explicitly excluded — see
+    x-disambiguation in apis.yml. The remaining hits (orum, f.orum) are unrelated third-party
+    packages.
+- registry: pypi
+  result: none
+  note: orum, orum-sdk and orum-api all 404
+- registry: rubygems
+  result: none
+- registry: crates.io
+  result: none
+- registry: packagist
+  result: none
+- registry: nuget
+  result: none
+- registry: maven-central
+  result: none
+- registry: pkg.go.dev
+  result: none
+
+source_repositories:
+  org: https://github.com/orumhq
+  org_evidence: >-
+    GitHub org "orumhq", name "Orum", blog https://orum.com/, email support@orum.com,
+    description "Connect with prospects 10x faster". This is a NEW find — the 2026-08-04 pass
+    probed github.com/orumcom, got a 404, and recorded "no GitHub org found".
+  created: '2018-09-23'
+  public_repos: 4
+  repos:
+  - name: SIP.js
+    url: https://github.com/orumhq/SIP.js
+    fork_of: onsip/SIP.js
+    language: TypeScript
+    updated: '2024-09-09'
+    note: SIP signalling library; corroborates the WebRTC/SIP stack described in the networking docs
+  - name: hepipe.js
+    url: https://github.com/orumhq/hepipe.js
+    fork_of: sipcapture/hepipe.js
+    language: JavaScript
+    updated: '2024-06-28'
+    note: pipes CDR/log rows to a HEP/HOMER server — VoIP capture tooling
+  - name: purview
+    url: https://github.com/orumhq/purview
+    fork_of: karthikv/purview
+    language: TypeScript
+    updated: '2025-02-10'
+  - name: sundial_api
+    url: https://github.com/orumhq/sundial_api
+    fork_of: null
+    language: TypeScript
+    updated: '2022-05-20'
+    note: >-
+      The only non-fork repo. A ~100-line fastify mock server that listens on localhost:4830,
+      accepts POST /call with {phone, webhookURL} and posts fake ringing/answered/completed
+      status callbacks. It is a hiring-exercise fixture (the package.json author is not an Orum
+      account), NOT a product API — deliberately not treated as a contract and nothing is
+      derived from it.
+  finding: >-
+    The org publishes no SDK, no CLI, no OpenAPI and no product code. Three of the four repos
+    are forks of third-party VoIP tooling.
+
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://chromewebstore.google.com/detail/orum/mgldaplfkpdgnojhbmllomokgeabokdd
+    status: 200
+  - url: https://api.github.com/orgs/orumhq
+    status: 200
+  - url: https://api.github.com/orgs/orum
+    status: 404
+  - url: https://registry.npmjs.org/-/v1/search?text=orum
+    status: 200
+    note: no first-party orum.com package in the results
+  - url: https://pypi.org/pypi/orum/json
+    status: 404

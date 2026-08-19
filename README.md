@@ -50,12 +50,33 @@ Sales Teams." It integrates with Salesforce, HubSpot, Outreach, Salesloft, Gong 
 entirely — orum.io, a payments-infrastructure provider doing FedNow/RTP/ACH money movement and
 bank-account verification. Same name, unrelated businesses.
 
-**No public developer surface as of 2026-08-04.** Orum publishes no OpenAPI, no API reference, no
-documentation host, no SDKs, no CLI, no MCP server and no `llms.txt`; `docs.orum.com`,
-`developers.orum.com`, `api.orum.com` and `app.orum.com` do not resolve. Webhooks are sold as a paid
-add-on and named as an integration method, but are not publicly documented. `apis: []` in `apis.yml`
-is deliberate — nothing has been scaffolded or generated for this provider, and every probe is
-recorded under `x-evidence`. It does publish a status page, a trust portal, a responsible-disclosure
-policy, and SOC 2 Type 2 plus ISO 27001/27017/27018/27701 attestations.
+**No request API as of 2026-08-13.** Orum publishes no OpenAPI, no API reference, no documentation
+host, no GraphQL, no SDKs, no CLI, no MCP server, no A2A agent card and no `llms.txt`;
+`docs.orum.com`, `developers.orum.com`, `api.orum.com` and `app.orum.com` do not resolve. `apis: []`
+in `apis.yml` is deliberate — nothing has been scaffolded or generated for this provider, and every
+probe is recorded under `x-evidence`.
+
+**One machine-facing contract: outbound webhooks — and they *are* documented.** The 2026-08-04 pass
+recorded webhooks as "sold as an add-on but not publicly documented." That was wrong, and this pass
+corrects it. Orum publishes a full webhook reference in its help center
+([ART-463-webhooks](https://support.orum.com/en-US/orum/article/ART-463-webhooks), HTTP 200, no
+credentials): one event `call-disposition-added`, an `{event, payload, test}` envelope, 13 documented
+call properties, HMAC-SHA256 base64 signing in an `x-webhook-signature: t={timestamp},s={sig}` header
+over `{timestamp}.{body}`, a return-2xx-before-processing contract with a ~15 second timeout, 8
+retries over 30 minutes with exponential backoff and jitter, no historical replay, and three egress
+IPs. It is captured in `asyncapi/orum-com-webhooks.yml`. The reference exists; its **discoverability**
+is the real defect — the article appears in none of the help center's eight directories, and the only
+public path to it is the 2025-04-14 launch blog post, whose link returns a 502.
+
+**Also found this pass:** the GitHub org is [`orumhq`](https://github.com/orumhq) (the earlier probe
+of `orumcom` 404'd), holding four public repos — three forks of third-party VoIP tooling and one
+hiring-exercise mock server, no SDK and no spec; a first-party Chrome/Edge extension on the Chrome Web
+Store (v0.1.1, 2026-02-25); a dated 20-entry product-update feed; Auth0-backed SSO supporting SAML,
+OpenID Connect and OAuth 2.0; and a machine-readable Atlassian Statuspage at
+`status.orum.com/api/v2/summary.json`. Orum publishes a status page, a trust portal, a
+responsible-disclosure policy (`security@orum.com`, no safe harbour), and SOC 2 Type 2 plus ISO
+27001/27017/27018/27701 attestations. It serves **no** `/.well-known/` document from any host it
+controls — the one `security.txt` that answers 200 is Atlassian's, on the Statuspage subdomain, and is
+not credited to Orum.
 
 Source: surfaced by an API Evangelist conversation on 2026-08-04 — https://www.orum.com/

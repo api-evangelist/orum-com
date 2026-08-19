@@ -1,0 +1,91 @@
+generated: '2026-08-13'
+method: searched
+source: https://support.orum.com/en-US/orum/article/Am0DBxe--singlesignon-sso
+docs: https://support.orum.com/en-US/orum/article/Am0DBxe--singlesignon-sso
+scope: >-
+  IMPORTANT — there is no public request API, so there is no API authentication model to
+  document. This file records the two authentication surfaces Orum actually publishes: (1)
+  human sign-in to the Orum application, and (2) the signature scheme a webhook CONSUMER uses
+  to authenticate Orum's outbound deliveries. Nothing here was derived from a spec; there is
+  no spec.
+summary:
+  types: [saml, openIdConnect, oauth2, hmac-signature]
+  api_key_in: []
+  oauth2_flows: []
+  api_auth_documented: false
+  api_auth_note: no API keys, tokens, or client credentials are issued or documented
+
+schemes:
+- name: application-sso
+  kind: user-authentication
+  type: openIdConnect
+  identity_platform: Auth0
+  standards: [SAML, OpenID Connect, OAuth 2.0]
+  identity_providers_named: [Okta, Azure AD, Google Workspace]
+  idp_note: >-
+    Orum names those three and says "and others"; the authoritative list is Auth0's, which
+    Orum defers to rather than publishing its own.
+  enablement: >-
+    Org admin enables SSO under Settings -> System Settings -> Single Sign-On, then sends a
+    self-service configuration link to an IdP administrator who does not need an Orum account.
+  configuration_link_lifetime:
+    valid_for: 5 days from generation
+    completion_window: 5 hours after first access
+    max_accesses: 10
+  domain_verification:
+    required: true
+    method: DNS record on the authoritative DNS server for the email domain
+    typical_duration: 24-48 hours
+    tip_published: keep the TTL on the verification records short
+  sso_only_mode:
+    supported: true
+    note: >-
+      An org can restrict authentication to SSO only. Orum publishes the failure mode plainly:
+      "In the case where our third party provider, Auth0, is down, access to Orum will not be
+      possible unless this option is disabled." Support must disable it manually to restore
+      access. That is a single-vendor availability dependency on the login path, disclosed.
+  mfa:
+    supported: true
+    note: >-
+      The security page states "depending on your login method, Orum supports multi-factor
+      authentication" — conditional, with no detail on which methods.
+  source: https://support.orum.com/en-US/orum/article/Am0DBxe--singlesignon-sso
+
+- name: webhook-signature
+  kind: message-authentication
+  type: http
+  scheme: hmac
+  direction: Orum -> customer endpoint (consumer verifies)
+  header: x-webhook-signature
+  algorithm: HMAC-SHA256
+  encoding: base64
+  signed_value: '{timestamp}.{stringified_body}'
+  header_format: 't={timestamp},s={encoded-signature}'
+  key_management: >-
+    The signing key is chosen by the customer at webhook-creation time and typed into the Orum
+    UI. Orum does not generate it, does not rotate it, and explicitly permits ignoring it:
+    "you may discard it on receipt if you don't wish to use a signing key, but something does
+    need to be filled out here." There is no key rotation mechanism and no way to read the key
+    back out.
+  replay_protection: >-
+    Advisory only — Orum recommends rejecting payloads whose timestamp is more than five
+    minutes old. Not enforced by Orum.
+  standards_note: not RFC 9421 HTTP Message Signatures and not Standard Webhooks
+  source: https://support.orum.com/en-US/orum/article/ART-463-webhooks
+
+gaps:
+- No API authentication of any kind — no keys, no tokens, no OAuth client registration.
+- The Orum sign-in link on every page points at https://orum.com/oauth, which 404s to a plain
+  GET (unchanged since the 2026-08-04 pass) — the only "auth" URL Orum exposes publicly is
+  broken for anyone not arriving through the app.
+- Webhook signing keys are customer-supplied with no rotation, no strength requirement, and an
+  explicit opt-out.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://support.orum.com/en-US/orum/article/Am0DBxe--singlesignon-sso
+    status: 200
+  - url: https://support.orum.com/en-US/orum/article/ART-463-webhooks
+    status: 200
+  - url: https://orum.com/oauth
+    status: 404

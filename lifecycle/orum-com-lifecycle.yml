@@ -1,0 +1,84 @@
+generated: '2026-08-13'
+method: searched
+source: https://status.orum.com
+versioning:
+  scheme: none
+  current: null
+  docs: null
+  note: >-
+    Orum publishes no API and therefore no API versioning scheme. Product releases are dated
+    only (see changelog/orum-com-changelog.yml). The one machine-facing contract Orum ships —
+    the outbound webhook — carries no version field in its envelope and no version header, so
+    a consumer has no way to detect a payload change other than by observing one.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    No deprecation policy, no Sunset/Deprecation header support (RFC 8594), and no advance
+    notice commitment is published anywhere on orum.com, the help center, or the trust portal.
+    Orum's own webhook doc says payload fields will be added over time ("in the coming weeks,
+    we'll be adding even more data fields") with no mechanism for announcing it.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA or uptime target. The Software and Services Terms are linked in the footer
+    but /software_and_services_agreement 404s to a plain GET (still broken as of 2026-08-13).
+status_page:
+  url: https://status.orum.com
+  platform: Atlassian Statuspage
+  subscribable: true
+  machine_readable:
+    available: true
+    endpoints:
+    - https://status.orum.com/api/v2/summary.json
+    - https://status.orum.com/api/v2/status.json
+    - https://status.orum.com/api/v2/components.json
+    - https://status.orum.com/history.rss
+    - https://status.orum.com/history.atom
+    ownership_note: >-
+      These endpoints are the standard Atlassian Statuspage v2 surface served on an Orum
+      subdomain — the contract is Atlassian's, not Orum's, and Orum is NOT credited with
+      publishing an API for them. They are recorded here because they are the only
+      unauthenticated machine-readable signal about Orum's platform that exists.
+  page_id: 02wg24ff6sy4
+  components:
+  - name: Dialer
+    group: Orum services
+  - name: Salesfloor
+    group: Orum services
+  - name: Analytics
+    group: Orum services
+  - name: Coaching suite
+    group: Orum services
+  - name: Vonage Voice API
+    group: Third-party integrations
+  - name: HubSpot API
+    group: Third-party integrations
+  components_note: >-
+    The status page names two third-party dependencies Orum treats as part of its own
+    availability surface — Vonage (voice/video) and HubSpot — which is unusually candid and is
+    corroborated by the networking help article naming Vonage for Salesfloor.
+  observed:
+    fetched: '2026-08-13'
+    indicator: none
+    description: All Systems Operational
+    open_incidents: 0
+    scheduled_maintenances: 1
+deprecated_operations: []
+gaps:
+- No versioning scheme, no deprecation policy, no Sunset header support, no published SLA.
+- The webhook payload is explicitly slated to grow with no versioning or notice mechanism.
+- The footer's "Software and Services Terms" link is dead (404), so the governing agreement is
+  not publicly reachable from the site that links it.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://status.orum.com/api/v2/summary.json
+    status: 200
+  - url: https://status.orum.com/api/v2/components.json
+    status: 200
+  - url: https://status.orum.com/history.atom
+    status: 200
+  - url: https://www.orum.com/software_and_services_agreement
+    status: 404

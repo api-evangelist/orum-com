@@ -1,0 +1,89 @@
+generated: '2026-08-13'
+method: searched
+source: https://support.orum.com/en-US/orum/article/ART-463-webhooks
+scope: >-
+  Orum ships no request API, so there are no request conventions (no pagination, no field
+  expansion, no request-id tracing, no versioning header, no error envelope). Everything below
+  is the runtime semantics of the ONE machine-facing contract Orum publishes: the outbound
+  webhook. Recorded so an integrator can see the whole contract in one place.
+authentication:
+  style: none for requests; HMAC-SHA256 signature verification on inbound deliveries
+  see: authentication/orum-com-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No idempotency key, no delivery id in the envelope, and no de-duplication guidance. Orum
+    retries up to 8 times over 30 minutes on any non-2xx or timeout, so DUPLICATE DELIVERY IS
+    EXPECTED and the consumer has nothing in the payload to de-duplicate on. The Webhook Logs
+    UI shows an "ID" per event, but that id is not documented as being present in the payload.
+    This is the single most consequential gap in Orum's contract and the reason no Idempotency
+    pointer is emitted for this provider.
+pagination:
+  supported: false
+  note: no listing surface exists
+field_expansion:
+  supported: false
+metadata:
+  supported: false
+  note: >-
+    Payload shape is partly tenant-defined instead — every column of a CSV-uploaded prospect
+    list is appended to the payload for prospects on that list.
+request_tracing:
+  header: null
+  supported: false
+versioning:
+  scheme: none
+  in_envelope: false
+  note: the envelope carries no version field; see lifecycle/orum-com-lifecycle.yml
+error_envelope:
+  shape: null
+  format: null
+  note: >-
+    No API, therefore no error envelope. Orum publishes no error codes, no problem+json, and
+    no failure taxonomy. The only failure semantics published are delivery-side: a non-2xx or
+    a timeout from the consumer triggers retry.
+rate_limit_signaling:
+  headers: []
+  note: none published; see rate-limits/orum-com-rate-limits.yml
+webhook_conventions:
+  transport: HTTPS POST, application/json
+  ack_contract: >-
+    Return 2xx BEFORE processing. Orum explicitly warns that operating on the data first will
+    time out (~15 seconds) and cause a redelivery.
+  timeout_seconds: 15
+  retry: exponential backoff with jitter, up to 8 attempts across a 30-minute window
+  retried_on: [3xx, 4xx, 5xx, timeout]
+  test_flag: >-
+    A `"test": true` property is present ONLY on deliveries triggered by the TEST WEBHOOK
+    button and absent on real ones. Consumers are instructed to branch on it — an unusual
+    convention, since it means the envelope shape differs between test and live.
+  ordering: not documented
+  replay: not supported; no historical backfill
+  egress_ips: [3.138.92.104, 18.116.161.231, 3.19.195.170]
+network_requirements:
+  source: https://support.orum.com/en-US/orum/article/S5hQ0SdQ-networking-recommendations-and-whitelisting
+  dialer:
+    transport: WebRTC with STUN/TURN NAT traversal, RTP over UDP to Orum's SIP server
+    allowlist: outbound UDP and TCP to Cloudflare's public STUN/TURN servers
+    reference: https://developers.cloudflare.com/realtime/turn/
+    failure_modes_published: [symmetric NAT, firewall dropping UDP]
+  salesfloor:
+    third_party: Vonage Video API
+    note: Orum defers to Vonage's own allowlisting recommendations
+  embedded_support:
+    third_party: DevRev.ai
+    note: the support widget is embedded in the Orum app; the devrev.ai domain may need allowing
+cross_links:
+  events: asyncapi/orum-com-webhooks.yml
+  authentication: authentication/orum-com-authentication.yml
+  lifecycle: lifecycle/orum-com-lifecycle.yml
+  rate_limits: rate-limits/orum-com-rate-limits.yml
+  sandbox: sandbox/orum-com-sandbox.yml
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://support.orum.com/en-US/orum/article/ART-463-webhooks
+    status: 200
+  - url: https://support.orum.com/en-US/orum/article/S5hQ0SdQ-networking-recommendations-and-whitelisting
+    status: 200

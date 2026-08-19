@@ -1,0 +1,185 @@
+generated: '2026-08-13'
+method: searched
+source: https://support.orum.com/en-US/orum/article/ART-463-webhooks
+spec_type: none
+note: >-
+  Orum documents an outbound webhook surface but publishes NO AsyncAPI document and no
+  OpenAPI. This file is the webhook catalog transcribed from Orum's own public help-center
+  article, which is readable without credentials. It corrects the 2026-08-04 profiling pass,
+  which recorded webhooks as "sold as an add-on but not publicly documented" — the reference
+  exists, it is simply not linked from any developer page and is only reachable from the
+  2025-04-14 launch blog post. Nothing here is generated: every field, header, retry number
+  and IP below is published by Orum verbatim.
+discovery:
+  reachable_from:
+  - https://www.orum.com/blog/introducing-orum-webhooks-real-time-sales-data-for-any-crm-or-workflow
+  - https://support.orum.com/en-US/orum/article/ART-463-webhooks
+  not_linked_from:
+  - the help-center directory index (the article is absent from all eight published directories)
+  - any developer portal (none exists)
+  announced: '2025-04-14'
+  updated_by_provider: '~2026-03 (article states "Updated 5 months ago" as of 2026-08-13)'
+
+commercial:
+  add_on: true
+  plans: [Launch, Ascend]
+  pricing: contact account representative (no published figure)
+  support_model: >-
+    Orum states webhooks are "designed to be implemented and supported by your company's
+    internal technical resources" and recommends confirming those resources exist before
+    purchase.
+
+direction: outbound-only
+note_direction: >-
+  Orum states webhooks "send data from Orum to your systems — but they don't pull leads or
+  contacts into Orum (yet)." There is no inbound/request API of any kind.
+
+configuration:
+  surface: in-app only — Settings -> System -> Webhooks
+  public_management_api: false
+  fields:
+  - name: Event Type
+    required: true
+    note: dropdown; "Call Disposition Added" is the only event published
+  - name: Webhook URL
+    required: true
+    note: destination endpoint, must accept POST
+  - name: Webhook Signing Key
+    required: true
+    note: >-
+      customer-chosen value; Orum states it "can be anything you choose, and you may discard
+      it on receipt if you don't wish to use a signing key, but something does need to be
+      filled out here"
+  - name: Description
+    required: false
+
+transport:
+  method: POST
+  content_type: application/json
+  expected_response: 2xx
+  timeout_seconds: 15
+  note_timeout: >-
+    Orum instructs endpoints to return 2xx BEFORE operating on the data; a slow handler is
+    treated as a timeout and re-delivered.
+
+events:
+- name: call-disposition-added
+  ui_label: Call Disposition Added
+  description: >-
+    Emitted when a rep logs a disposition on a completed call; carries the call detail and
+    prospect metadata.
+  status: published
+
+envelope:
+  shape: |
+    {
+      "event": "call-disposition-added",
+      "payload": ...,
+      "test": true
+    }
+  fields:
+  - name: event
+    type: string
+    description: identifier of the event that triggered the webhook
+  - name: payload
+    type: object
+    description: event data; varies by event type
+  - name: test
+    type: boolean
+    description: >-
+      present ONLY on requests sent by the TEST WEBHOOK button. Absent on real deliveries.
+      Orum instructs consumers to check this flag before processing to avoid ingesting test
+      data.
+
+payload_fields:
+  source: >-
+    Published verbatim as "Call Properties Included in Webhook Payload". Orum documents the
+    field list in prose only — no JSON Schema, no example payload, no types are published.
+  fields:
+  - datetime
+  - call duration
+  - disposition
+  - list name
+  - notes
+  - objections
+  - recording URL
+  - user email address
+  - recording type
+  - inbound or outbound call
+  - call transcript
+  - prospect name
+  - prospect phone number
+  dynamic_fields: >-
+    If a prospect list was uploaded by CSV, every column imported via that CSV is also
+    included in the payload for all prospects on that list — so the payload shape is
+    tenant-dependent and not fully knowable from the docs.
+
+security:
+  signature:
+    header: x-webhook-signature
+    algorithm: HMAC-SHA256
+    encoding: base64
+    signed_value: '{timestamp}.{stringified_body}'
+    header_format: 't={timestamp},s={encoded-signature}'
+    key: the customer-supplied Webhook Signing Key configured in Orum settings
+    replay_window: >-
+      Orum recommends rejecting a payload whose timestamp is more than five minutes old.
+    verification_sample: node.js, published in the article (crypto.createHmac + timingSafeEqual)
+    standards_note: >-
+      This is a vendor-specific scheme, not RFC 9421 HTTP Message Signatures and not the
+      Standard Webhooks specification. The header format resembles Stripe's Stripe-Signature.
+    doc_defect: >-
+      The published Node.js sample contradicts its own prose: the prose says reject payloads
+      older than five minutes, but the sample compares against 60000 ms (one minute), and the
+      snippet opens with `onst crypto = require('crypto')` (a truncated `const`). Recorded as
+      observed, not corrected.
+  egress_ips:
+    note: >-
+      Orum states it "may be necessary to whitelist certain IPs in order for webhooks to work
+      as expected". No IP-range endpoint or change policy is published.
+    addresses:
+    - 3.138.92.104
+    - 18.116.161.231
+    - 3.19.195.170
+
+delivery:
+  retry_strategy: exponential backoff with jitter
+  max_attempts: 8
+  retry_window: 30 minutes
+  retried_on: [3xx, 4xx, 5xx, timeout]
+  on_exhaustion: event logged as failed in Webhook Logs
+  ordering: not documented
+  historical_replay: >-
+    Not supported. Orum states data is delivered "via the chosen configuration moving forward
+    only. There is not an option for historical records at this time."
+
+observability:
+  webhook_logs:
+    location: Settings -> System -> Webhooks -> VIEW WEBHOOK LOGS
+    filters: [Event Type, Date Range]
+    columns:
+    - ID — unique identifier for the webhook event
+    - URL — the destination the webhook was sent to
+    - Status — delivered or failed
+    - Inserted At — timestamp the event was triggered
+    api_access: false
+
+gaps:
+- No AsyncAPI, OpenAPI or JSON Schema for the payload — the field list is prose.
+- No example payload published, so field names and types must be discovered by receiving one.
+- Exactly one event type; no event catalog to grow into.
+- No public management API — webhooks can only be created, tested, listed or deleted in the UI.
+- CSV-derived columns make the payload tenant-variable and undocumentable from the outside.
+- The delete flow is uncertain in Orum's own docs ("button not shown in screenshots; confirm
+  if available").
+
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://support.orum.com/en-US/orum/article/ART-463-webhooks
+    status: 200
+  - url: https://support.orum.com/orum/article/ART-463-webhooks
+    status: 502
+    note: the un-localised path the launch blog post links to returns a Vercel 502
+  - url: https://www.orum.com/blog/introducing-orum-webhooks-real-time-sales-data-for-any-crm-or-workflow
+    status: 200

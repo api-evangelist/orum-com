@@ -1,0 +1,93 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.orum.com/pricing
+docs: https://www.orum.com/pricing
+currency: null
+billing_period: null
+pricing_model: per-seat, sales-led
+published_figures: false
+published_figures_note: >-
+  Orum names its tiers and enumerates their features but publishes NO price for any of them.
+  Every tier's call to action is "Request Pricing". Orum's own FAQ says pricing is "based on
+  package type and number of users" and directs the reader to a form.
+minimum_seats: 3
+free_trial:
+  available: true
+  limit: 500 dials
+  note: >-
+    Orum's FAQ states no paid plan limits dials; the trial is the only dial-capped offering.
+plan_count: 2
+plans:
+- name: Launch
+  tagline: Launch your calling culture
+  price: null
+  minimum_seats: 3
+  cta: Request pricing
+  included:
+  - Unlimited Dials
+  - 5 Caller IDs Per Month
+  - Parallel Dialing (up to 5 lines)
+  - Analytics & Reporting
+  - Salesfloor
+  - Boost Connect
+  - Multi-integration
+- name: Ascend
+  tagline: Scale your calling culture
+  price: null
+  minimum_seats: 3
+  cta: Request pricing
+  included:
+  - International Calling (160+ countries and regions)
+  - Data Enrichment (200 credits/month)
+  - Parallel Dialing (up to 10 lines)
+  - 10 Caller IDs per user, per month
+  - AI Conversation Acceleration
+  - Standard Coaching Suite
+  - Advanced Roles & Permissions
+add_on_count: 3
+add_ons:
+- name: Webhooks
+  available_on: all plans
+  price: null
+  description: >-
+    Real-time event delivery, "easy to configure and secure", works with any system. This is
+    the paid gate on Orum's only machine-facing surface — see asyncapi/orum-com-webhooks.yml.
+    The help-center article adds that pricing comes from an account representative and that
+    the customer is expected to supply their own technical resources to implement and support
+    it.
+- name: AI Coaching
+  available_on: all plans
+  price: null
+  includes:
+  - AI Roleplay Agents
+  - AI Scorecards
+  - Coaching Portals
+  - Live Battlecards (marked "coming soon")
+- name: Ascend Limited
+  available_on: Ascend only
+  price: null
+  description: >-
+    A reduced-usage seat for AEs and other roles who dial less frequently; limited calling with
+    access to all Ascend features.
+quotas:
+  data_enrichment_credits: 200/month (Ascend)
+  caller_ids: 5/month (Launch), 10 per user/month (Ascend)
+  parallel_lines: 5 (Launch), 10 (Ascend)
+  dials: unlimited on paid plans; 500 on the free trial
+overage: not published
+international:
+  coverage: US & Canada plus 160+ international countries and regions
+  tier: Ascend
+  docs: https://www.orum.com/international-calling
+gaps:
+- No dollar figure anywhere; every tier is a form.
+- No machine-readable pricing or catalog endpoint.
+- Webhook pricing is not even on the pricing page — it is "contact your account
+  representative", so the cost of Orum's only integration contract is unknowable in advance.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://www.orum.com/pricing
+    status: 200
+  - url: https://www.orum.com/request-pricing
+    status: 200

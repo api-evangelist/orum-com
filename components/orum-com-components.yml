@@ -1,0 +1,45 @@
+generated: '2026-08-13'
+method: searched
+source: https://support.orum.com/en-US/orum/article/apiCNAs9-chrome-extension
+summary: >-
+  Orum ships no embeddable UI components for developers — no web components, no element
+  library, no hosted/prebuilt surface a customer can embed in their own product, and no loader
+  script. The two client-side surfaces below are Orum's own, installed into the rep's browser
+  or embedded into Orum's app; they are recorded for completeness and are explicitly not an
+  embeddable component library.
+embeddable_for_customers: false
+components:
+- family: browser-extension
+  name: Orum Chrome Extension
+  distribution: Chrome Web Store
+  url: https://chromewebstore.google.com/detail/orum/mgldaplfkpdgnojhbmllomokgeabokdd
+  version: 0.1.1
+  updated: '2026-02-25'
+  browsers: [Chrome, Microsoft Edge]
+  host_permissions: ['*://orum.com/*', '*://*.orum.com/*']
+  function: >-
+    Renders the prospect's LinkedIn profile inside the Orum connect screen alongside call
+    notes. Requires the rep to be signed in to LinkedIn and the prospect record to carry a
+    LinkedIn URL.
+  configurable_by_developer: false
+  docs: https://support.orum.com/en-US/orum/article/apiCNAs9-chrome-extension
+- family: embedded-third-party
+  name: DevRev support widget (PLuG)
+  loader: https://plug-platform.devrev.ai/static/plug.js
+  vendor: DevRev.ai
+  function: in-app support/help surface embedded inside the Orum application
+  ownership_note: >-
+    Third-party, not an Orum component. Recorded because Orum's own networking guidance tells
+    customers to allow the devrev.ai domain for it to work, so it is part of Orum's deployed
+    client footprint.
+  docs: https://support.orum.com/en-US/orum/article/S5hQ0SdQ-networking-recommendations-and-whitelisting
+gaps:
+- No embeddable dialer, no call widget, no JS element library — a customer cannot put any part
+  of Orum into their own application.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://support.orum.com/en-US/orum/article/apiCNAs9-chrome-extension
+    status: 200
+  - url: https://chromewebstore.google.com/detail/orum/mgldaplfkpdgnojhbmllomokgeabokdd
+    status: 200

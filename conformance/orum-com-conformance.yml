@@ -1,0 +1,114 @@
+generated: '2026-08-13'
+method: searched
+source: https://trust.orum.com/
+note: >-
+  Assertions below are grounded in Orum's published trust portal, security page and help-center
+  articles. Nothing is derived from a spec — Orum publishes no OpenAPI, AsyncAPI, GraphQL SDL
+  or JSON Schema, so every contract-shaped standard below is recorded as not conforming for the
+  simple reason that no contract exists to conform.
+standards:
+- id: openapi
+  conforms: false
+  evidence: no OpenAPI at any probed path on www.orum.com; no docs/api host resolves in DNS
+- id: asyncapi
+  conforms: false
+  evidence: webhooks documented in prose only; no AsyncAPI document published
+- id: json-schema
+  conforms: false
+  evidence: webhook payload fields listed as prose bullets; no schema published
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: no API, therefore no error envelope
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: >-
+    404 on www.orum.com, support.orum.com and trust.orum.com. The 200 at
+    status.orum.com/.well-known/security.txt is Atlassian's document (Canonical
+    https://www.atlassian.com/.well-known/security.txt), not Orum's.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: no deprecation policy or Sunset/Deprecation header support published
+- id: rfc9421-http-message-signatures
+  conforms: false
+  evidence: >-
+    webhook signing uses a vendor-specific x-webhook-signature header (t=,s= over
+    HMAC-SHA256/base64), not RFC 9421
+- id: standard-webhooks
+  conforms: false
+  evidence: signature header and envelope do not follow the Standard Webhooks specification
+- id: hmac-sha256-webhook-signing
+  conforms: true
+  evidence: >-
+    x-webhook-signature = t={timestamp},s={base64(HMAC-SHA256(key, timestamp + "." + body))},
+    published with a Node.js verification sample
+  source: https://support.orum.com/en-US/orum/article/ART-463-webhooks
+- id: saml2
+  conforms: true
+  evidence: SSO article states SAML support via Auth0
+  source: https://support.orum.com/en-US/orum/article/Am0DBxe--singlesignon-sso
+- id: oidc
+  conforms: true
+  evidence: SSO article states OpenID Connect support via Auth0
+- id: oauth2
+  conforms: true
+  evidence: SSO article states OAuth 2.0 support via Auth0 (user sign-in only, not API authorization)
+- id: webrtc
+  conforms: true
+  evidence: >-
+    networking article states the dialer transports audio over WebRTC with STUN/TURN NAT
+    traversal and RTP over UDP to Orum's SIP server
+  source: https://support.orum.com/en-US/orum/article/S5hQ0SdQ-networking-recommendations-and-whitelisting
+- id: sip
+  conforms: true
+  evidence: >-
+    Orum runs a SIP server (networking article) and maintains a public fork of onsip/SIP.js at
+    github.com/orumhq/SIP.js
+- id: llms-txt
+  conforms: false
+  evidence: /llms.txt returns 404 on www.orum.com
+- id: a2a-agent-card
+  conforms: false
+  evidence: /.well-known/agent-card.json and /.well-known/agent.json 404 on all four Orum hosts
+- id: mcp
+  conforms: false
+  evidence: no MCP server published; /mcp 404s
+compliance_program:
+  published: true
+  portal: https://trust.orum.com/
+  platform: SecurityPal AI (Customer Assurance Profile)
+  profile_id: 48bf24d2-ffcd-431b-a945-93b97f81e494
+  published_at: '2026-07-01'
+  certifications:
+  - SOC 2 Type 2
+  - ISO 27001:2022
+  - ISO 27017:2015
+  - ISO 27018:2019
+  - ISO 27701:2019
+  - GDPR Ready
+  - US Data Protection Ready
+  - Data Privacy Framework
+  frameworks_referenced: [ISO, NIST]
+  regulatory_context:
+  - name: TCPA / DNC
+    evidence: >-
+      Orum ships DNC (Do Not Call) registry suppression and two-party-consent call-recording
+      settings — help-center articles "Add Prospect or Number to Do-Not-Call (DNC) Registry"
+      and "Call Recording Settings and Two-Party Consent". Relevant to any outbound dialer.
+  - name: STIR/SHAKEN-adjacent number reputation
+    evidence: >-
+      2026-05-07 product update announces a Hiya partnership "to protect your number
+      reputation"; Orum also ships number-rotation to reduce spam flagging. No STIR/SHAKEN
+      attestation level is published.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://trust.orum.com/
+    status: 200
+  - url: https://www.orum.com/platform/security
+    status: 200
+  - url: https://www.orum.com/openapi.json
+    status: 404
+  - url: https://www.orum.com/llms.txt
+    status: 404
+  - url: https://www.orum.com/.well-known/agent-card.json
+    status: 404

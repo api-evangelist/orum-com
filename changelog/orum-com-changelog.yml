@@ -1,0 +1,118 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.orum.com/product-updates
+docs: https://www.orum.com/product-updates
+scheme: dated-release-notes
+note: >-
+  Orum publishes a dated product-update feed, not a versioned API changelog — there is no API
+  to version. Entry titles and dates below are transcribed from each entry's own page. The
+  index page at /product-updates is client-side rendered and serves an empty list to a plain
+  GET; the individual entries are in the sitemap and are server-rendered, which is how these
+  were harvested.
+current_version: null
+current_version_note: no version identifier is published; releases are dated only
+machine_readable: false
+machine_readable_note: no RSS, Atom or JSON feed is published for the product-update stream
+breaking_change_policy: none published
+entry_count: 20
+window: '2026-01-07 through 2026-06-16 (the full published set as of 2026-08-13)'
+entries:
+- date: '2026-06-16'
+  title: View Team Performance Metrics on the Dashboard
+  url: https://www.orum.com/product-updates/view-team-performance-metrics-on-the-dashboard
+  breaking: false
+- date: '2026-06-11'
+  title: Automatic Country Code Matching
+  url: https://www.orum.com/product-updates/automatic-country-code-matching
+  breaking: false
+- date: '2026-05-21'
+  title: Live Listen Now Shows Which List a Rep Is Dialing From
+  url: https://www.orum.com/product-updates/live-listen-now-shows-which-list-a-rep-is-dialing-from
+  breaking: false
+- date: '2026-05-07'
+  title: Orum Partners With Hiya to Protect Your Number Reputation
+  url: https://www.orum.com/product-updates/orum-partners-with-hiya-to-protect-your-number-reputation
+  breaking: false
+- date: '2026-04-29'
+  title: Smarter Number Rotation to Reduce Spam Flagging
+  url: https://www.orum.com/product-updates/smarter-number-rotation-to-reduce-spam-flagging
+  breaking: false
+- date: '2026-04-27'
+  title: Live Transfer Now Supports Round Robin
+  url: https://www.orum.com/product-updates/live-transfer-now-supports-round-robin
+  breaking: false
+- date: '2026-04-21'
+  title: Click Anywhere on a Prospect Row to Open It
+  url: https://www.orum.com/product-updates/click-anywhere-on-a-prospect-row-to-open-it
+  breaking: false
+- date: '2026-04-17'
+  title: Assign New Reps to a Team Right From the Invite Flow
+  url: https://www.orum.com/product-updates/assign-new-reps-to-a-team-right-from-the-invite-flow
+  breaking: false
+- date: '2026-03-20'
+  title: Get Full Call Context Without Leaving the Coaching Portal
+  url: https://www.orum.com/product-updates/get-full-call-context-without-leaving-the-coaching-portal
+  breaking: false
+- date: '2026-03-12'
+  title: Sort and Filter by Heat to Surface Your Best Numbers
+  url: https://www.orum.com/product-updates/sort-and-filter-by-heat-to-surface-your-best-numbers
+  breaking: false
+- date: '2026-03-04'
+  title: 'Saved Views: Reopen Your Analytics Filters Instantly'
+  url: https://www.orum.com/product-updates/saved-views-reopen-your-analytics-filters-instantly
+  breaking: false
+- date: '2026-02-26'
+  title: 'AI Scorecard Summaries: See Coaching Needs at a Glance'
+  url: https://www.orum.com/product-updates/ai-scorecard-summaries-see-coaching-needs-at-a-glance
+  breaking: false
+- date: '2026-02-12'
+  title: Track Roleplay Progress With Automatic AI Scoring
+  url: https://www.orum.com/product-updates/track-roleplay-progress-with-automatic-ai-scoring
+  breaking: false
+- date: '2026-02-12'
+  title: AI Roleplay Just Got Dramatically More Realistic
+  url: https://www.orum.com/product-updates/ai-roleplay-just-got-dramatically-more-realistic
+  breaking: false
+- date: '2026-02-09'
+  title: Gong Engage users can now skip call tasks
+  url: https://www.orum.com/product-updates/gong-engage-users-can-now-skip-call-tasks
+  breaking: false
+- date: '2026-02-04'
+  title: Clearer AI Notes Plus New Admin Setting
+  url: https://www.orum.com/product-updates/clearer-ai-notes-plus-new-admin-setting
+  breaking: false
+- date: '2026-01-16'
+  title: Private Salesfloor Rooms
+  url: https://www.orum.com/product-updates/private-salesfloor-rooms
+  breaking: false
+- date: '2026-01-14'
+  title: Better Error Details When AI Scorecards are Missing
+  url: https://www.orum.com/product-updates/better-error-details-when-ai-scorecards-are-missing
+  breaking: false
+- date: '2026-01-07'
+  title: Share a Team Member's Coaching Dashboard Link
+  url: https://www.orum.com/product-updates/share-a-team-member-s-coaching-dashboard-link
+  breaking: false
+- date: '2016-02-03'
+  title: DNC Number Suppression Moved to Admin Settings
+  url: https://www.orum.com/product-updates/dnc-number-suppression-moved-to-admin-settings
+  breaking: false
+  note: >-
+    The entry page renders the date as "Feb 03 2016", ten years before every sibling entry and
+    two years before Orum's own founding. Recorded verbatim as published; almost certainly a
+    typo for 2026-02-03 on Orum's side.
+gaps:
+- No entry mentions the webhook surface; the 2025-04-14 webhooks launch was a blog post, not a
+  product update, so a consumer watching this feed would not have seen it.
+- No feed (RSS/Atom/JSON), so the changelog cannot be subscribed to by a machine.
+- The index page is JS-rendered and serves nothing to a crawler; only the sitemap exposes the
+  individual entries.
+x-evidence:
+  fetched: '2026-08-13'
+  probes:
+  - url: https://www.orum.com/product-updates
+    status: 200
+    note: 200 but client-side rendered; the entry list is absent from the served HTML
+  - url: https://www.orum.com/sitemap.xml
+    status: 200
+    note: source of the 20 entry URLs

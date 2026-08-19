@@ -1,0 +1,91 @@
+generated: '2026-08-13'
+method: probed
+source: live GET of every /.well-known/ path on every Orum host
+summary: >-
+  Orum serves NO /.well-known/ document from any host it controls. 28 probes across four hosts
+  returned 404 for every discovery path. One 200 was observed — a security.txt on
+  status.orum.com — and it is NOT Orum's: it is signed by security@atlassian.com and carries
+  Canonical https://www.atlassian.com/.well-known/security.txt, because status.orum.com is
+  Atlassian Statuspage infrastructure. NO WellKnown and NO SecurityTxt pointer is emitted for
+  this provider. Recording the absence is the finding.
+pointer_emitted: false
+pointer_rationale: >-
+  Per the pipeline's well-known rule, a WellKnown/SecurityTxt pointer asserts the PROVIDER
+  serves that surface. Orum does not. Crediting Atlassian's document to Orum would be exactly
+  the false-positive this rule exists to prevent.
+hosts:
+- host: https://www.orum.com
+  controlled_by_provider: true
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  note: >-
+    All eight return a real HTTP 404 carrying the site's Next.js 404 page — a hard 404, not a
+    soft-200 catch-all, so the absence is unambiguous.
+- host: https://support.orum.com
+  controlled_by_provider: true
+  platform: DevRev help center
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://status.orum.com
+  controlled_by_provider: false
+  platform: Atlassian Statuspage
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: null
+    credited_to_provider: false
+    note: >-
+      Atlassian's PGP-signed security.txt. Contact security@atlassian.com, Policy
+      https://www.atlassian.com/trust/security/report-a-vulnerability, Canonical
+      https://www.atlassian.com/.well-known/security.txt, Expires 2027-02-04. Not saved to
+      well-known/ and not credited to Orum.
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://trust.orum.com
+  controlled_by_provider: false
+  platform: SecurityPal AI
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+hosts_that_do_not_resolve:
+- api.orum.com
+- docs.orum.com
+- developers.orum.com
+- developer.orum.com
+- app.orum.com
+- dialer.orum.com
+- api-docs.orum.com
+- mcp.orum.com
+- login.orum.com
+- auth.orum.com
+- my.orum.com
+- web.orum.com
+remedy: >-
+  The cheapest fix available to Orum is an RFC 9116 security.txt at
+  https://www.orum.com/.well-known/security.txt naming security@orum.com and pointing Policy
+  at https://www.orum.com/responsible_disclosure — both of which already exist.
+x-evidence:
+  fetched: '2026-08-13'
+  probe_count: 28
