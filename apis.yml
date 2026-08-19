@@ -47,7 +47,7 @@ accessModel:
   - https://www.orum.com/pricing
   generated: '2026-08-04'
   method: searched
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-08-04'
 modified: '2026-08-13'
 image: https://cdn.sanity.io/images/w0eqmudi/production/2b821b473a58f9c3510eb28647c02e861d32727c-2000x1050.heif
