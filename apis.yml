@@ -35,6 +35,17 @@ x-disambiguation: >-
   product-adjacent buyer. `all/orum` keeps its bare slug because it is already referenced by
   four published paper bundles and ~25k generated pages; per the domain-slug convention the TLD
   is appended only where needed to disambiguate, which is here.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: sales-led
