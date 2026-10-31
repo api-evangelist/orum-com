@@ -64,41 +64,115 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Orum is an AI-powered sales calling and performance platform — a parallel dialer, a virtual
-salesfloor, a coaching suite, and AI data agents — marketed as "The Calling Performance System for
-Sales Teams." It integrates with Salesforce, HubSpot, Outreach, Salesloft, Gong Engage and Apollo.
+Orum is an AI-powered sales calling and performance platform, marketed as "The Calling Performance System for Sales Teams" and "the AI-powered Live Conversation Platform to supercharge sales activity, connect teams, and drive more revenue." Its products are a parallel Dialer (up to 5 lines on the Launch plan, 10 on Ascend), Salesfloor for virtual co-selling, a Coaching and Enablement suite, Orum AI trained on a claimed one billion-plus sales calls, and Scout, a set of AI data agents. It positions itself as purpose-built for maximizing live conversations and explicitly distinct from the dialers built into CRMs and sales-engagement platforms, integrating instead with Salesforce, HubSpot, Outreach, Salesloft, Gong Engage and Apollo. Pricing is two named plans, Launch and Ascend, both contact-sales with a three-seat minimum and no published figures, plus a free trial capped at 500 dials; AI Coaching and Webhooks are paid add-ons. Orum publishes NO request API — no OpenAPI, no API reference, no developer portal, no SDKs, no CLI, no MCP server, no llms.txt, and api./docs./developers.orum.com do not resolve. Its one machine-facing contract is an outbound webhook, and contrary to the first profiling pass it IS publicly documented: a help-center article publishes the single `call-disposition-added` event, the `{event, payload, test}` envelope, HMAC-SHA256 signature verification over an `x-webhook-signature` header, a 15-second ack timeout, an 8-attempt/30-minute exponential-backoff retry policy and three egress IPs. The article is simply unlinked from any directory and reachable only from the 2025-04-14 launch blog post. Orum also publishes a dated product-update feed, a status page, a trust portal, a responsible-disclosure policy, Auth0-backed SSO (SAML/OIDC/OAuth 2.0), a Chrome extension, and SOC 2 Type 2 plus ISO 27001:2022, 27017:2015, 27018:2019 and 27701:2019 attestations.
 
-**Not orum.io.** This profile is **orum.com**. The `all/orum` repository is a different company
-entirely — orum.io, a payments-infrastructure provider doing FedNow/RTP/ACH money movement and
-bank-account verification. Same name, unrelated businesses.
+**Areas:** Company · Artificial Intelligence · Sales · Sales Engagement · Sales Dialer · Outbound Sales · Sales Coaching · Conversation Intelligence · Telephony · Revenue Operations · Webhook · Parallel Dialing
 
-**No request API as of 2026-08-13.** Orum publishes no OpenAPI, no API reference, no documentation
-host, no GraphQL, no SDKs, no CLI, no MCP server, no A2A agent card and no `llms.txt`;
-`docs.orum.com`, `developers.orum.com`, `api.orum.com` and `app.orum.com` do not resolve. `apis: []`
-in `apis.yml` is deliberate — nothing has been scaffolded or generated for this provider, and every
-probe is recorded under `x-evidence`.
+## Orum on APIs.io
 
-**One machine-facing contract: outbound webhooks — and they *are* documented.** The 2026-08-04 pass
-recorded webhooks as "sold as an add-on but not publicly documented." That was wrong, and this pass
-corrects it. Orum publishes a full webhook reference in its help center
-([ART-463-webhooks](https://support.orum.com/en-US/orum/article/ART-463-webhooks), HTTP 200, no
-credentials): one event `call-disposition-added`, an `{event, payload, test}` envelope, 13 documented
-call properties, HMAC-SHA256 base64 signing in an `x-webhook-signature: t={timestamp},s={sig}` header
-over `{timestamp}.{body}`, a return-2xx-before-processing contract with a ~15 second timeout, 8
-retries over 30 minutes with exponential backoff and jitter, no historical replay, and three egress
-IPs. It is captured in `asyncapi/orum-com-webhooks.yml`. The reference exists; its **discoverability**
-is the real defect — the article appears in none of the help center's eight directories, and the only
-public path to it is the 2025-04-14 launch blog post, whose link returns a 502.
+Everything profiled for Orum is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/orum-com/](https://apis.io/providers/orum-com/)** — or go straight to one of the APIs or properties below.
 
-**Also found this pass:** the GitHub org is [`orumhq`](https://github.com/orumhq) (the earlier probe
-of `orumcom` 404'd), holding four public repos — three forks of third-party VoIP tooling and one
-hiring-exercise mock server, no SDK and no spec; a first-party Chrome/Edge extension on the Chrome Web
-Store (v0.1.1, 2026-02-25); a dated 20-entry product-update feed; Auth0-backed SSO supporting SAML,
-OpenID Connect and OAuth 2.0; and a machine-readable Atlassian Statuspage at
-`status.orum.com/api/v2/summary.json`. Orum publishes a status page, a trust portal, a
-responsible-disclosure policy (`security@orum.com`, no safe harbour), and SOC 2 Type 2 plus ISO
-27001/27017/27018/27701 attestations. It serves **no** `/.well-known/` document from any host it
-controls — the one `security.txt` that answers 200 is Atlassian's, on the Statuspage subdomain, and is
-not credited to Orum.
+### Published properties
 
-Source: surfaced by an API Evangelist conversation on 2026-08-04 — https://www.orum.com/
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Orum Com Webhooks](https://apis.io/asyncapis/orum-com/orum-com-webhooks/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Orum Com Authentication](https://apis.io/security/orum-com/orum-com-authentication/)
+- [Orum Com Domain Security](https://apis.io/security/orum-com/orum-com-domain-security/)
+- [Orum Com Trust Center](https://apis.io/security/orum-com/orum-com-trust-center/)
+- [Orum Com Vulnerability Disclosure](https://apis.io/security/orum-com/orum-com-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Orum Com Plans Pricing](https://apis.io/plans/orum-com/orum-com-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Orum Com Rate Limits](https://apis.io/rate-limits/orum-com/orum-com-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.orum.com/)
+- [Documentation](https://support.orum.com/en-US/orum/directories)
+- [Getting started](https://support.orum.com/en-US/orum/directories/4XGqC47h)
+- [Pricing](https://www.orum.com/pricing)
+- [Support](https://support.orum.com/en-US/orum)
+- [Changelog](https://www.orum.com/product-updates)
+- [Blog](https://www.orum.com/blog)
+- [Security](https://www.orum.com/responsible_disclosure)
+- [Compliance](https://www.orum.com/platform/security)
+- [Trust centre](https://trust.orum.com)
+- [Terms of service](https://www.orum.com/terms)
+- [Privacy policy](https://www.orum.com/privacy)
+- [GitHub](https://github.com/orumhq)
+- [Status](https://status.orum.com)
+
+## API Evangelist rating
+
+**Kin Score 49.4** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 48.2 |
+| Contract quality | 39.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 52.6 |
+| Developer ergonomics | 47.6 |
+| Access clarity | 68.4 |
+
+**Agent readiness 22.3** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 32.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/orum-com/](https://apis.io/providers/orum-com/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Orum: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/orum-com/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
